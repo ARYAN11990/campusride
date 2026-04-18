@@ -31,7 +31,7 @@ A fullstack ride-sharing web application built for college students. Post rides,
 
 ### 1. Clone & Navigate
 ```bash
-cd "campusride first project"
+cd "campusride"
 ```
 
 ### 2. Install Backend Dependencies
