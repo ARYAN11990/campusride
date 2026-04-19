@@ -59,14 +59,23 @@ const Navbar = () => {
                     )}
                     <span className="group-hover:text-gray-800 transition-colors">{user.name}</span>
                   </Link>
-                  <motion.button
+                  {/* <motion.button
                     whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleLogout}
                     className="text-sm px-4 py-1.5 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
                   >
                     Logout
-                  </motion.button>
+                  </motion.button> */}
+
+                  {<motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={handleLogout}
+                    className="text-sm px-4 py-1.5 rounded-lg text-white font-medium bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all"
+                  >
+                    Logout
+                  </motion.button>}
                 </div>
               </>
             ) : (
