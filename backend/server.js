@@ -59,7 +59,81 @@
 //   console.log(`🚗 CampusRide server running on port ${PORT}`);
 // });
 
-// --------------------------------------------------------------------------------------
+// 1ST  --------------------------------------------------------------------------------------
+
+// const express = require('express');
+// const http = require('http');
+// const path = require('path');
+// const fs = require('fs');
+// const { Server } = require('socket.io');
+// const cors = require('cors');
+// const dotenv = require('dotenv');
+// const connectDB = require('./config/db');
+// const setupSocket = require('./socket/chat');
+
+// // Load env vars
+// dotenv.config();
+
+// // Connect to database
+// connectDB();
+
+// const app = express();
+// const server = http.createServer(app);
+
+// // ✅ ALLOWED ORIGINS (IMPORTANT)
+// const allowedOrigins = [
+//   "http://localhost:5173", // local
+//   "https://campusridee.vercel.app", // ⚠️ apna exact Vercel URL daalo
+// ];
+
+// // ✅ Socket.io setup (FIXED)
+// const io = new Server(server, {
+//   cors: {
+//     origin: allowedOrigins,
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   },
+// });
+
+// // ✅ Middleware (FIXED)
+// app.use(cors({
+//   origin: allowedOrigins,
+//   credentials: true,
+// }));
+
+// app.use(express.json());
+
+// // Ensure uploads directory exists
+// const uploadsDir = path.join(__dirname, 'uploads', 'profiles');
+// if (!fs.existsSync(uploadsDir)) {
+//   fs.mkdirSync(uploadsDir, { recursive: true });
+// }
+
+// // Serve uploaded files as static assets
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// // Routes
+// app.use('/api/auth', require('./routes/auth'));
+// app.use('/api/rides', require('./routes/rides'));
+// app.use('/api/bookings', require('./routes/bookings'));
+// app.use('/api/messages', require('./routes/messages'));
+// app.use('/api/admin', require('./routes/admin'));
+// app.use('/api/profile', require('./routes/profile'));
+
+// // Health check
+// app.get('/api/health', (req, res) => {
+//   res.json({ status: 'OK', message: 'CampusRide API is running' });
+// });
+
+// // Setup Socket.io
+// setupSocket(io);
+
+// const PORT = process.env.PORT || 5000;
+// server.listen(PORT, () => {
+//   console.log(`🚗 CampusRide server running on port ${PORT}`);
+// });
+
+// ---------------------------------- 2ND -----------------------------------------
 
 const express = require('express');
 const http = require('http');
@@ -80,25 +154,34 @@ connectDB();
 const app = express();
 const server = http.createServer(app);
 
-// ✅ ALLOWED ORIGINS (IMPORTANT)
+// ✅ FIXED ORIGINS (NO TRAILING SLASH)
 const allowedOrigins = [
-  "http://localhost:5173", // local
-  "https://campusridee.vercel.app/", // ⚠️ apna exact Vercel URL daalo
+  "http://localhost:5173",
+  "https://campusridee.vercel.app"
 ];
 
-// ✅ Socket.io setup (FIXED)
+// ✅ Socket.io setup
 const io = new Server(server, {
   cors: {
     origin: allowedOrigins,
     methods: ["GET", "POST"],
-    credentials: true,
-  },
+    credentials: true
+  }
 });
 
-// ✅ Middleware (FIXED)
+// ✅ Middleware
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
+  origin: function (origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
 
 app.use(express.json());
@@ -109,7 +192,7 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve uploaded files as static assets
+// Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
