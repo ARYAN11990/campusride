@@ -1,3 +1,4 @@
+import rideImg from "../assets/ride.webp";
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/api';
@@ -111,8 +112,9 @@ const Home = () => {
           </>
         }
         subtitle="Find students traveling your route and ride together safely. Affordable, fast, and eco-friendly campus transportation."
-        lottieSrc="https://lottie.host/7e0ee47a-241f-49ed-82dd-a8b417e2acbd/tBv0QzO0F5.json"
-        image="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1200"
+        // lottieSrc="https://lottie.host/7e0ee47a-241f-49ed-82dd-a8b417e2acbd/tBv0QzO0F5.json"
+        // image="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1200"
+        image={rideImg}
         buttons={
           user
             ? [
