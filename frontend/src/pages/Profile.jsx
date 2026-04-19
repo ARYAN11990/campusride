@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { getAvatarColor } from '../utils/helpers';
+import { Camera, UserCog, KeyRound, TriangleAlert, Trash2 } from 'lucide-react';
 
 const Profile = () => {
   const { user, updateUser, logout } = useAuth();
@@ -158,10 +159,7 @@ const Profile = () => {
               {photoLoading ? (
                 <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
-                <svg className="w-7 h-7 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                <Camera className="w-7 h-7 text-gray-800" strokeWidth={1.5} />
               )}
             </div>
           </button>
@@ -177,9 +175,7 @@ const Profile = () => {
       {/* ─── Edit Profile Section ─── */}
       <div className="glass rounded-2xl p-8 mb-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
-          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
+          <UserCog className="w-5 h-5 text-blue-600" />
           Edit Profile
         </h3>
 
@@ -207,7 +203,7 @@ const Profile = () => {
           <button
             type="submit"
             disabled={profileLoading}
-            className="w-full py-3 text-white font-semibold btn-transition disabled:opacity-50"
+            className="w-full py-3 bg-blue-600 rounded-lg text-white font-semibold btn-transition hover:bg-blue-700 disabled:opacity-50"
           >
             {profileLoading ? 'Saving...' : 'Save Changes'}
           </button>
@@ -217,9 +213,7 @@ const Profile = () => {
       {/* ─── Change Password Section ─── */}
       <div className="glass rounded-2xl p-8 mb-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
-          <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
+          <KeyRound className="w-5 h-5 text-amber-400" />
           Change Password
         </h3>
 
@@ -249,7 +243,7 @@ const Profile = () => {
           <button
             type="submit"
             disabled={passwordLoading}
-            className="w-full py-3 text-white font-semibold btn-transition disabled:opacity-50"
+            className="w-full py-3 bg-blue-600 rounded-lg text-white font-semibold btn-transition hover:bg-blue-700 disabled:opacity-50"
           >
             {passwordLoading ? 'Updating...' : 'Update Password'}
           </button>
@@ -259,9 +253,7 @@ const Profile = () => {
       {/* ─── Danger Zone ─── */}
       <div className="glass rounded-2xl p-8 border border-red-500/20">
         <h3 className="text-lg font-semibold text-red-400 mb-2 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
+          <TriangleAlert className="w-5 h-5" />
           Danger Zone
         </h3>
         <p className="text-sm text-gray-500 mb-4">
@@ -269,7 +261,7 @@ const Profile = () => {
         </p>
         <button
           onClick={() => setShowDeleteModal(true)}
-          className="px-6 py-2.5 rounded-xl bg-red-500/10 text-red-400 font-medium hover:bg-red-500/20 border border-red-500/20 transition-colors"
+          className="px-6 py-2.5 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-colors"
         >
           Delete My Account
         </button>
@@ -288,9 +280,7 @@ const Profile = () => {
           <div className="relative glass rounded-2xl p-8 max-w-md w-full border border-red-500/20 shadow-2xl">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
+                <Trash2 className="w-8 h-8 text-red-400" />
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Delete Account?</h3>
               <p className="text-sm text-gray-500 mb-6">
@@ -299,14 +289,14 @@ const Profile = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowDeleteModal(false)}
-                  className="flex-1 py-3 rounded-xl glass text-gray-800 font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 py-3 rounded-xl bg-gray-200 text-black font-medium hover:bg-gray-300 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleDeleteAccount}
                   disabled={deleteLoading}
-                  className="flex-1 py-3 rounded-xl bg-red-500 text-gray-800 font-semibold hover:bg-red-600 transition-colors disabled:opacity-50"
+                  className="flex-1 py-3 rounded-xl bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors disabled:opacity-50"
                 >
                   {deleteLoading ? 'Deleting...' : 'Yes, Delete'}
                 </button>

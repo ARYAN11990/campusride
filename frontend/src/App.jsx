@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import PageTransition from './components/PageTransition';
+import LoadingScreen from './components/LoadingScreen';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -20,16 +23,19 @@ import 'aos/dist/aos.css';
 
 function App() {
   const { loading } = useAuth();
+  const location = useLocation();
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   useEffect(() => {
     AOS.init({ duration: 800 });
   }, []);
 
-  if (loading) {
+  if (showLoadingScreen) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
+      <LoadingScreen
+        isDataLoading={loading}
+        onFinish={() => setShowLoadingScreen(false)}
+      />
     );
   }
 
@@ -37,55 +43,57 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/search" element={<SearchRide />} />
-          <Route path="/ride/:id" element={<RideDetails />} />
-          <Route
-            path="/post-ride"
-            element={
-              <ProtectedRoute>
-                <PostRide />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              <ProtectedRoute>
-                <Chat />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chat/:userId"
-            element={
-              <ProtectedRoute>
-                <Chat />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+            <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+            <Route path="/search" element={<PageTransition><SearchRide /></PageTransition>} />
+            <Route path="/ride/:id" element={<PageTransition><RideDetails /></PageTransition>} />
+            <Route
+              path="/post-ride"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><PostRide /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><Dashboard /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><Chat /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chat/:userId"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><Chat /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/admin-login" element={<PageTransition><AdminLogin /></PageTransition>} />
+            <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><Profile /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </main>
       <Footer />
     </div>

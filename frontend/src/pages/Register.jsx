@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -125,13 +126,20 @@ const Register = () => {
               />
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3 text-white font-semibold btn-transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-blue-600 rounded-lg text-white font-semibold transition-all hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
-              {loading ? 'Creating account...' : 'Create Account'}
-            </button>
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Creating account...
+                </>
+              ) : 'Create Account'}
+            </motion.button>
           </form>
 
           <p className="mt-6 text-center text-sm text-gray-500">

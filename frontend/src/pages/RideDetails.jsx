@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import API from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { getAvatarColor, formatPrice } from '../utils/helpers';
@@ -199,13 +200,20 @@ const RideDetails = () => {
                 )}
               </div>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleBook}
               disabled={booking}
-              className="w-full sm:w-auto px-8 py-3 text-white font-semibold btn-transition disabled:opacity-50"
+              className="w-full sm:w-auto px-8 py-3 bg-blue-600 rounded-lg text-white font-semibold transition-all hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {booking ? 'Booking...' : 'Book Now'}
-            </button>
+              {booking ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Booking...
+                </>
+              ) : 'Book Now'}
+            </motion.button>
           </div>
         )}
 

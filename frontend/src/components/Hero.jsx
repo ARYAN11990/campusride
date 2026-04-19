@@ -67,9 +67,10 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import heroImg from "../assets/ride.webp";   // 👈 ADD THIS
+import AnimatedGraphic from './AnimatedGraphic';
+import heroImg from "../assets/ride.webp";
 
-const Hero = ({ title, subtitle, image, buttons }) => {
+const Hero = ({ title, subtitle, image, lottieSrc, buttons }) => {
   return (
     <div className="backdrop-blur-md bg-white/70 rounded-2xl overflow-hidden mb-10 border border-gray-200 shadow-lg">
       <div className="flex flex-col md:flex-row items-stretch">
@@ -94,8 +95,8 @@ const Hero = ({ title, subtitle, image, buttons }) => {
               {buttons.map((btn, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <Link
                     to={btn.to}
@@ -120,13 +121,21 @@ const Hero = ({ title, subtitle, image, buttons }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex-1 w-full h-72 md:h-auto min-h-[300px] overflow-hidden"
         >
-          <motion.img
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            src={image || heroImg}   // 👈 CHANGE HERE
-            alt="Hero Header"
-            className="w-full h-full object-cover object-center scale-105"
-          />
+          {lottieSrc ? (
+            <AnimatedGraphic 
+              src={lottieSrc} 
+              altText="Hero Animation" 
+              className="w-full h-full scale-110" 
+            />
+          ) : (
+            <motion.img
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              src={image || heroImg}
+              alt="Hero Header"
+              className="w-full h-full object-cover object-center scale-105"
+            />
+          )}
         </motion.div>
 
       </div>

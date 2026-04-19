@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getAvatarColor } from '../utils/helpers';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -41,39 +42,45 @@ const Navbar = () => {
                     className="flex items-center gap-2 text-sm text-gray-700 px-3 py-1.5 rounded-full bg-white hover:bg-gray-50 transition-colors group"
                   >
                     {user.profilePhoto ? (
-                      <img
+                      <motion.img
+                        whileHover={{ rotate: 10, y: -2 }}
                         src={`http://localhost:5000/${user.profilePhoto}`}
                         alt={user.name}
                         className="w-6 h-6 rounded-full object-cover"
                       />
                     ) : (
-                      <div
+                      <motion.div
+                        whileHover={{ rotate: 10, y: -2 }}
                         className="w-6 h-6 rounded-full flex items-center justify-center text-gray-800 text-xs font-bold"
                         style={getAvatarColor(user.name)}
                       >
                         {user.name?.charAt(0)}
-                      </div>
+                      </motion.div>
                     )}
                     <span className="group-hover:text-gray-800 transition-colors">{user.name}</span>
                   </Link>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={handleLogout}
-                    className="text-sm px-4 py-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                    className="text-sm px-4 py-1.5 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
                   >
                     Logout
-                  </button>
+                  </motion.button>
                 </div>
               </>
             ) : (
               <>
                 <NavLink to="/admin">Admin</NavLink>
                 <NavLink to="/login">Login</NavLink>
-                <Link
-                  to="/register"
-                  className="ml-2 px-5 py-2 rounded-lg text-white font-medium text-sm hover:opacity-90 btn-transition bg-blue-500"
-                >
-                  Get Started
-                </Link>
+                <motion.div whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }} whileTap={{ scale: 0.98 }}>
+                  <Link
+                    to="/register"
+                    className="ml-2 px-5 py-2 rounded-lg bg-blue-600 text-white font-medium text-sm hover:opacity-90 btn-transition block"
+                  >
+                    Get Started
+                  </Link>
+                </motion.div>
               </>
             )}
           </div>
@@ -107,7 +114,7 @@ const Navbar = () => {
                 <MobileLink to="/admin" onClick={() => setMenuOpen(false)}>Admin</MobileLink>
                 <button
                   onClick={() => { handleLogout(); setMenuOpen(false); }}
-                  className="w-full text-left text-sm px-4 py-2 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+                  className="w-full text-left text-sm px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
                 >
                   Logout
                 </button>

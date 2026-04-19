@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import API from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { getAvatarColor } from '../utils/helpers';
+import { motion } from 'framer-motion';
+import { Car, Ticket } from 'lucide-react';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -88,8 +90,8 @@ const Dashboard = () => {
           onClick={() => setActiveTab('rides')}
           className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
             activeTab === 'rides'
-              ? '-white shadow-lg shadow-primary-500/25'
-              : 'text-gray-500 hover:text-gray-800'
+              ? 'bg-blue-600 text-white shadow-lg shadow-primary-500/25'
+              : 'bg-gray-200 text-black hover:bg-gray-300'
           }`}
         >
           My Rides ({myRides.length})
@@ -98,8 +100,8 @@ const Dashboard = () => {
           onClick={() => setActiveTab('bookings')}
           className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
             activeTab === 'bookings'
-              ? '-white shadow-lg shadow-primary-500/25'
-              : 'text-gray-500 hover:text-gray-800'
+              ? 'bg-blue-600 text-white shadow-lg shadow-primary-500/25'
+              : 'bg-gray-200 text-black hover:bg-gray-300'
           }`}
         >
           My Bookings ({myBookings.length})
@@ -142,7 +144,7 @@ const Dashboard = () => {
                   </span>
                   <button
                     onClick={() => handleDeleteRide(ride._id)}
-                    className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 text-sm hover:bg-red-500/20 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700 transition-colors"
                   >
                     Delete
                   </button>
@@ -152,7 +154,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <EmptyState
-            emoji="🚗"
+            icon={<Car size={48} strokeWidth={1.5} />}
             title="No rides posted yet"
             desc="Start sharing your rides with fellow students"
             link="/post-ride"
@@ -191,7 +193,7 @@ const Dashboard = () => {
                   {booking.status === 'confirmed' && (
                     <button
                       onClick={() => handleCancelBooking(booking._id)}
-                      className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 text-sm hover:bg-red-500/20 transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700 transition-colors"
                     >
                       Cancel
                     </button>
@@ -202,7 +204,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <EmptyState
-            emoji="🎫"
+            icon={<Ticket size={48} strokeWidth={1.5} />}
             title="No bookings yet"
             desc="Browse available rides and book one"
             link="/search"
@@ -221,14 +223,20 @@ const StatCard = ({ label, value, color }) => (
   </div>
 );
 
-const EmptyState = ({ emoji, title, desc, link, linkText }) => (
-  <div className="glass rounded-2xl p-12 text-center">
-    <div className="text-5xl mb-4">{emoji}</div>
+const EmptyState = ({ icon, title, desc, link, linkText }) => (
+  <div className="backdrop-blur-md bg-white/70 rounded-2xl p-12 text-center border border-gray-200 shadow-lg flex flex-col items-center">
+    <motion.div 
+      animate={{ y: [-5, 5, -5] }} 
+      transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} 
+      className="text-blue-400 mb-6 drop-shadow-md bg-white p-6 rounded-full shadow-inner"
+    >
+      {icon}
+    </motion.div>
     <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
     <p className="text-gray-500 mb-6">{desc}</p>
     <Link
       to={link}
-      className="inline-block px-6 py-3 text-white font-semibold btn-transition"
+      className="inline-block px-6 py-3 bg-blue-600 rounded-lg text-white font-semibold btn-transition hover:bg-blue-700"
     >
       {linkText}
     </Link>

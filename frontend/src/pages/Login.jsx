@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -45,37 +47,50 @@ const Login = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+            <div className="relative">
               <input
                 type="email"
+                id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-800 placeholder-slate-500 focus:border-blue-500"
+                className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-gray-200 text-gray-800 placeholder-transparent focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none"
                 placeholder="you@college.edu"
                 required
               />
+              <label htmlFor="email" className="absolute left-4 top-2 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-blue-500 pointer-events-none">
+                Email
+              </label>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+            <div className="relative">
               <input
                 type="password"
+                id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-800 placeholder-slate-500 focus:border-blue-500"
+                className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-gray-200 text-gray-800 placeholder-transparent focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none"
                 placeholder="••••••••"
                 required
               />
+              <label htmlFor="password" className="absolute left-4 top-2 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-blue-500 pointer-events-none">
+                Password
+              </label>
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold btn-transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
-            </button>
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Signing in...
+                </>
+              ) : 'Sign In'}
+            </motion.button>
           </form>
 
           <p className="mt-6 text-center text-sm text-gray-500">

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
+import { motion } from 'framer-motion';
 
 const PostRide = () => {
   const [formData, setFormData] = useState({
@@ -142,13 +143,20 @@ const PostRide = () => {
             </div>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full py-3 text-white font-semibold btn-transition disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            className="w-full py-3 bg-blue-600 rounded-lg text-white font-semibold transition-all hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed mt-2 flex justify-center items-center gap-2"
           >
-            {loading ? 'Posting...' : 'Post Ride'}
-          </button>
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Posting...
+              </>
+            ) : 'Post Ride'}
+          </motion.button>
         </form>
       </div>
     </div>

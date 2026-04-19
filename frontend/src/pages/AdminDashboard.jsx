@@ -99,8 +99,8 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab(tab)}
             className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
               activeTab === tab
-                ? '-white shadow-lg shadow-primary-500/25'
-                : 'text-gray-500 hover:text-gray-800'
+                ? 'bg-blue-600 text-white shadow-lg shadow-primary-500/25'
+                : 'bg-gray-200 text-black hover:bg-gray-300'
             }`}
           >
             {tab}
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
                       {u.role !== 'admin' && (
                         <button
                           onClick={() => handleDeleteUser(u._id)}
-                          className="px-3 py-1 rounded-lg bg-red-500/10 text-red-400 text-xs hover:bg-red-500/20 transition-colors"
+                          className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs hover:bg-red-700 transition-colors"
                         >
                           Delete
                         </button>
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
                     <td className="p-4 text-right">
                       <button
                         onClick={() => handleDeleteRide(r._id)}
-                        className="px-3 py-1 rounded-lg bg-red-500/10 text-red-400 text-xs hover:bg-red-500/20 transition-colors"
+                        className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs hover:bg-red-700 transition-colors"
                       >
                         Delete
                       </button>

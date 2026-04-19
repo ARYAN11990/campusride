@@ -343,7 +343,7 @@ const Chat = () => {
                   <button
                     type="submit"
                     disabled={!newMessage.trim() || sendingMsg}
-                    className="px-5 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium btn-transition disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium btn-transition disabled:opacity-50 flex items-center gap-2"
                   >
                     {sendingMsg ? (
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -369,7 +369,7 @@ const Chat = () => {
                 <p className="text-gray-500 text-sm mb-6">Choose someone from the sidebar, or find a ride to start a new chat.</p>
                 <Link
                   to="/search"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-white text-sm font-semibold btn-transition"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 rounded-lg text-white text-sm font-semibold btn-transition hover:bg-blue-700"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
