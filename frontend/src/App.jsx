@@ -102,10 +102,11 @@
 
 // export default App;
 
-// ------------------------------------- 2ND -------------------------------------------------
 
+
+// -------------------------------------------- 3RD ---------------------------------
 import { useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -145,12 +146,15 @@ function App() {
       />
     );
   }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+
       <main>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
+
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
             <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
@@ -204,9 +208,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            {/* ✅ FIX: Fallback route (VERY IMPORTANT) */}
+            <Route path="*" element={<Navigate to="/" />} />
+
           </Routes>
         </AnimatePresence>
       </main>
+
       <Footer />
     </div>
   );
