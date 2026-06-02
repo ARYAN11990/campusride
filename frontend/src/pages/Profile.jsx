@@ -4,6 +4,7 @@ import API from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { getAvatarColor } from '../utils/helpers';
 import { Camera, UserCog, KeyRound, TriangleAlert, Trash2 } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
   const { user, updateUser, logout } = useAuth();
@@ -140,11 +141,17 @@ const Profile = () => {
             className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-gray-200 group-hover:border-blue-500/50 transition-all cursor-pointer"
           >
             {user?.profilePhoto ? (
+              // <img
+              //   // src={`http://localhost:5000/${user.profilePhoto}`}
+              //   src={`https://campusride-hy3d.onrender.com/${user.profilePhoto}`}
+              //   alt={user.name}
+              //   className="w-full h-full object-cover"
+              // /> 
               <img
-                src={`http://localhost:5000/${user.profilePhoto}`}
-                alt={user.name}
-                className="w-full h-full object-cover"
-              />
+              alt={user.name}
+              className="w-full h-full object-cover"
+              src={`${API_URL}/${user.profilePhoto}`}
+              /> 
             ) : (
               <div
                 className="w-full h-full flex items-center justify-center text-gray-800 text-4xl font-bold"
@@ -155,13 +162,21 @@ const Profile = () => {
             )}
 
             {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            {/* <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               {photoLoading ? (
                 <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <Camera className="w-7 h-7 text-gray-800" strokeWidth={1.5} />
               )}
-            </div>
+            </div> */
+            <div 
+            className="absolute bottom-1 right-1 bg-blue-600 rounded-full p-2 shadow-lg border-2 border-white">
+              {photoLoading ? (
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <Camera className="w-4 h-4 text-white" strokeWidth={2} />
+                )}
+              </div>}
           </button>
         </div>
 

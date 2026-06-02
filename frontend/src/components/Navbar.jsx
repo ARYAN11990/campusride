@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { getAvatarColor } from '../utils/helpers';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -44,7 +45,8 @@ const Navbar = () => {
                     {user.profilePhoto ? (
                       <motion.img
                         whileHover={{ rotate: 10, y: -2 }}
-                        src={`http://localhost:5000/${user.profilePhoto}`}
+                        // src={`http://localhost:5000/${user.profilePhoto}`}
+                        src={`${API_URL}/${user.profilePhoto}`}
                         alt={user.name}
                         className="w-6 h-6 rounded-full object-cover"
                       />
