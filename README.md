@@ -2,6 +2,13 @@
 
 A fullstack ride-sharing web application built for college students. Post rides, search for available rides, book seats instantly, and chat with other users in real-time.
 
+## Click here to explore the live application:
+🌐 **Live Demo:** https://campusridee.vercel.app/
+
+## Preview
+
+![Home Page](./screenshots/home-page.png)
+
 ## Tech Stack
 
 - **Frontend:** React (Vite) + Tailwind CSS v4
@@ -73,7 +80,25 @@ Register a normal user, then use MongoDB shell or Compass to set `role: "admin"`
 ```js
 db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 ```
+## Application Screenshots
 
+### Home Page
+![home-page](./screenshots/home-page.png)
+
+### User Dashboard
+![User-Dashboard](./screenshots/User-DashBoard.png)
+
+### Post Ride
+![post-ride](./screenshots/post-ride.png)
+
+### Ride Information
+![Ride-info](./screenshots/Ride-info.png)
+
+### Available Rides
+![Available Rides](./screenshots/Rides.png)
+
+### Chat
+![Chat](./screenshots/Chat.png)
 ## Project Structure
 
 ```
@@ -84,10 +109,8 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 │   │   ├── rideController.js
 │   │   ├── bookingController.js
 │   │   ├── messageController.js
-│   │   ├── profileController.js
 │   │   └── adminController.js
 │   ├── middleware/auth.js      # JWT & admin middleware
-│   ├── middleware/upload.js    # Multer photo upload configuration
 │   ├── models/                 # Mongoose schemas
 │   │   ├── User.js
 │   │   ├── Ride.js
@@ -98,7 +121,6 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 │   │   ├── rides.js
 │   │   ├── bookings.js
 │   │   ├── messages.js
-│   │   ├── profile.js
 │   │   └── admin.js
 │   ├── socket/chat.js         # Socket.io chat handler
 │   ├── server.js              # Entry point
@@ -136,40 +158,25 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| **Auth** | | | |
-| POST | `/api/auth/register` | ✗ | Register |
-| POST | `/api/auth/login` | ✗ | Login |
-| GET | `/api/auth/me` | ✓ | Current user |
-| **Rides** | | | |
-| GET | `/api/rides` | ✗ | All active rides |
-| POST | `/api/rides` | ✓ | Create ride |
-| GET | `/api/rides/search` | ✗ | Search rides |
-| GET | `/api/rides/my` | ✓ | Get current user's posted rides |
-| GET | `/api/rides/:id` | ✗ | Get single ride details |
-| DELETE | `/api/rides/:id` | ✓ | Delete a ride |
-| **Bookings** | | | |
-| POST | `/api/bookings` | ✓ | Book seats on a ride |
-| GET | `/api/bookings/my` | ✓ | Get current user's bookings |
-| GET | `/api/bookings/ride/:rideId` | ✓ | Get bookings for a specific ride |
-| PUT | `/api/bookings/:id/cancel` | ✓ | Cancel booking |
-| **Profile** | | | |
-| GET | `/api/profile` | ✓ | Get user profile details |
-| PUT | `/api/profile` | ✓ | Update profile (name, email, phone) |
-| PUT | `/api/profile/password` | ✓ | Change current password |
-| PUT | `/api/profile/photo` | ✓ | Upload or change profile photo |
-| DELETE | `/api/profile` | ✓ | Delete user account (cascade deletes rides, bookings, and messages) |
-| **Messages (Chat)** | | | |
-| POST | `/api/messages` | ✓ | Send a message |
-| GET | `/api/messages/conversations` | ✓ | Get current user's active conversations |
-| GET | `/api/messages/:otherId` | ✓ | Get conversation history with a user |
-| **Admin** | | | |
-| GET | `/api/admin/stats` | Admin | Dashboard stats |
-| GET | `/api/admin/users` | Admin | All users |
-| DELETE | `/api/admin/users/:id` | Admin | Delete user |
-| GET | `/api/admin/rides` | Admin | All rides |
-| DELETE | `/api/admin/rides/:id` | Admin | Delete ride |
-| **Utility** | | | |
-| GET | `/api/health` | ✗ | Health check |
+| POST | /api/auth/register | ✗ | Register |
+| POST | /api/auth/login | ✗ | Login |
+| GET | /api/auth/me | ✓ | Current user |
+| GET | /api/rides | ✗ | All active rides |
+| POST | /api/rides | ✓ | Create ride |
+| GET | /api/rides/search | ✗ | Search rides |
+| GET | /api/rides/:id | ✗ | Get ride |
+| DELETE | /api/rides/:id | ✓ | Delete ride |
+| POST | /api/bookings | ✓ | Book a ride |
+| GET | /api/bookings/my | ✓ | My bookings |
+| PUT | /api/bookings/:id/cancel | ✓ | Cancel booking |
+| POST | /api/messages | ✓ | Send message |
+| GET | /api/messages/conversations | ✓ | My conversations |
+| GET | /api/messages/:otherId | ✓ | Get conversation |
+| GET | /api/admin/stats | Admin | Dashboard stats |
+| GET | /api/admin/users | Admin | All users |
+| DELETE | /api/admin/users/:id | Admin | Delete user |
+| GET | /api/admin/rides | Admin | All rides |
+| DELETE | /api/admin/rides/:id | Admin | Delete ride |
 
 ## License
 
