@@ -21,6 +21,9 @@ exports.createRide = async (req, res) => {
     });
 
     const populatedRide = await Ride.findById(ride._id).populate('driver', 'name email phone');
+    if (req.io) {
+      req.io.emit('newRide', populatedRide);
+    }
     res.status(201).json(populatedRide);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -33,7 +36,7 @@ exports.getRides = async (req, res) => {
   try {
     const rides = await Ride.find({ status: 'active', availableSeats: { $gt: 0 } })
       .populate('driver', 'name email phone')
-      .sort({ date: 1 });
+      .sort({ createdAt: -1 });
     res.json(rides);
   } catch (error) {
     res.status(500).json({ message: error.message });

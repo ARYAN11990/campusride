@@ -84,8 +84,10 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 │   │   ├── rideController.js
 │   │   ├── bookingController.js
 │   │   ├── messageController.js
+│   │   ├── profileController.js
 │   │   └── adminController.js
 │   ├── middleware/auth.js      # JWT & admin middleware
+│   ├── middleware/upload.js    # Multer photo upload configuration
 │   ├── models/                 # Mongoose schemas
 │   │   ├── User.js
 │   │   ├── Ride.js
@@ -96,6 +98,7 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 │   │   ├── rides.js
 │   │   ├── bookings.js
 │   │   ├── messages.js
+│   │   ├── profile.js
 │   │   └── admin.js
 │   ├── socket/chat.js         # Socket.io chat handler
 │   ├── server.js              # Entry point
@@ -133,25 +136,40 @@ db.users.updateOne({ email: "admin@college.edu" }, { $set: { role: "admin" } })
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| POST | /api/auth/register | ✗ | Register |
-| POST | /api/auth/login | ✗ | Login |
-| GET | /api/auth/me | ✓ | Current user |
-| GET | /api/rides | ✗ | All active rides |
-| POST | /api/rides | ✓ | Create ride |
-| GET | /api/rides/search | ✗ | Search rides |
-| GET | /api/rides/:id | ✗ | Get ride |
-| DELETE | /api/rides/:id | ✓ | Delete ride |
-| POST | /api/bookings | ✓ | Book a ride |
-| GET | /api/bookings/my | ✓ | My bookings |
-| PUT | /api/bookings/:id/cancel | ✓ | Cancel booking |
-| POST | /api/messages | ✓ | Send message |
-| GET | /api/messages/conversations | ✓ | My conversations |
-| GET | /api/messages/:otherId | ✓ | Get conversation |
-| GET | /api/admin/stats | Admin | Dashboard stats |
-| GET | /api/admin/users | Admin | All users |
-| DELETE | /api/admin/users/:id | Admin | Delete user |
-| GET | /api/admin/rides | Admin | All rides |
-| DELETE | /api/admin/rides/:id | Admin | Delete ride |
+| **Auth** | | | |
+| POST | `/api/auth/register` | ✗ | Register |
+| POST | `/api/auth/login` | ✗ | Login |
+| GET | `/api/auth/me` | ✓ | Current user |
+| **Rides** | | | |
+| GET | `/api/rides` | ✗ | All active rides |
+| POST | `/api/rides` | ✓ | Create ride |
+| GET | `/api/rides/search` | ✗ | Search rides |
+| GET | `/api/rides/my` | ✓ | Get current user's posted rides |
+| GET | `/api/rides/:id` | ✗ | Get single ride details |
+| DELETE | `/api/rides/:id` | ✓ | Delete a ride |
+| **Bookings** | | | |
+| POST | `/api/bookings` | ✓ | Book seats on a ride |
+| GET | `/api/bookings/my` | ✓ | Get current user's bookings |
+| GET | `/api/bookings/ride/:rideId` | ✓ | Get bookings for a specific ride |
+| PUT | `/api/bookings/:id/cancel` | ✓ | Cancel booking |
+| **Profile** | | | |
+| GET | `/api/profile` | ✓ | Get user profile details |
+| PUT | `/api/profile` | ✓ | Update profile (name, email, phone) |
+| PUT | `/api/profile/password` | ✓ | Change current password |
+| PUT | `/api/profile/photo` | ✓ | Upload or change profile photo |
+| DELETE | `/api/profile` | ✓ | Delete user account (cascade deletes rides, bookings, and messages) |
+| **Messages (Chat)** | | | |
+| POST | `/api/messages` | ✓ | Send a message |
+| GET | `/api/messages/conversations` | ✓ | Get current user's active conversations |
+| GET | `/api/messages/:otherId` | ✓ | Get conversation history with a user |
+| **Admin** | | | |
+| GET | `/api/admin/stats` | Admin | Dashboard stats |
+| GET | `/api/admin/users` | Admin | All users |
+| DELETE | `/api/admin/users/:id` | Admin | Delete user |
+| GET | `/api/admin/rides` | Admin | All rides |
+| DELETE | `/api/admin/rides/:id` | Admin | Delete ride |
+| **Utility** | | | |
+| GET | `/api/health` | ✗ | Health check |
 
 ## License
 

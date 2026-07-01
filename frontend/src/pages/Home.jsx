@@ -5,6 +5,7 @@ import API from '../services/api';
 import RideCard from '../components/RideCard';
 import Hero from '../components/Hero';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import SkeletonCard from '../components/SkeletonCard';
 import { motion, useMotionValue, useTransform, useSpring, useInView, animate, AnimatePresence } from 'framer-motion';
 import { Search, CheckSquare, Map, Car, Users as UsersIcon } from 'lucide-react';
@@ -86,10 +87,27 @@ const Home = () => {
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { socket } = useSocket();
 
   useEffect(() => {
     fetchRides();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNewRide = (newRide) => {
+      setRides((prevRides) => {
+        if (prevRides.some(r => r._id === newRide._id)) return prevRides;
+        return [newRide, ...prevRides];
+      });
+    };
+
+    socket.on('newRide', handleNewRide);
+    return () => {
+      socket.off('newRide', handleNewRide);
+    };
+  }, [socket]);
 
   const fetchRides = async () => {
     try {

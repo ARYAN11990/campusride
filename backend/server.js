@@ -195,6 +195,12 @@ if (!fs.existsSync(uploadsDir)) {
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Attach socket.io to req object
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/rides', require('./routes/rides'));
